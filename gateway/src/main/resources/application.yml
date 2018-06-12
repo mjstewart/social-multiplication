@@ -1,0 +1,35 @@
+server:
+  port: 8000
+
+zuul:
+  prefix: /api
+  routes:
+    multiplications:
+      path: /multiplications/**
+      serviceId: multiplication-service
+      stripPrefix: false
+    results:
+      path: /results/**
+      serviceId: multiplication-service
+      stripPrefix: false
+    leaders:
+      path: /leaders/**
+      serviceId: gamification-service
+      stripPrefix: false
+    stats:
+      path: /stats/**
+      serviceId: gamification-service
+      stripPrefix: false
+  include-debug-header: true
+  # only use the static routes about, this turns off zuul's crazy dynamic routing.
+  ignored-services: "*"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}

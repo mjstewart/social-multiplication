@@ -1,0 +1,19 @@
+server:
+  port: 8761
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+logging:
+  level.com.netflix:
+    eureka: OFF
+    discovery: OFF
+
+
