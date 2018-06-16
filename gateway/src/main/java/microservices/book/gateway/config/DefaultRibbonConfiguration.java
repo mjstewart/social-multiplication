@@ -1,22 +1,25 @@
 package microservices.book.gateway.config;
 
-import com.netflix.client.config.IClientConfig;
 import com.netflix.loadbalancer.AvailabilityFilteringRule;
 import com.netflix.loadbalancer.IPing;
 import com.netflix.loadbalancer.IRule;
 import com.netflix.loadbalancer.PingUrl;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 
 /**
  * https://github.com/Netflix/ribbon/wiki/Working-with-load-balancers#weightedresponsetimerule
  */
-public class RibbonConfiguration {
+//@Configuration
+public class DefaultRibbonConfiguration {
+
     /**
      * Ping - a component running in background to ensure liveness of servers
      * <p>/health is provided by spring actuator that each microservice uses</p>
      */
     @Bean
-    public IPing ribbonPing(IClientConfig config) {
+    public IPing ribbonPing() {
         return new PingUrl(false, "/health");
     }
 
@@ -26,7 +29,7 @@ public class RibbonConfiguration {
      * services based on the ping health check
      */
     @Bean
-    public IRule ribbonRule(IClientConfig config) {
+    public IRule ribbonRule() {
         return new AvailabilityFilteringRule();
     }
 }

@@ -2,7 +2,6 @@ package microservices.book.gamificationservice.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import microservices.book.gamificationservice.domain.LeaderBoardRow
-import microservices.book.gamificationservice.service.GameService
 import microservices.book.gamificationservice.service.LeaderBoardService
 import org.junit.Before
 import org.junit.Test

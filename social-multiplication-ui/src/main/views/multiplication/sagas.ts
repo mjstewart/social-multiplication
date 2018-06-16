@@ -14,6 +14,7 @@ export function* helloSaga() {
 function* randomFactorsRequest() {
     try {
         const multiplication = yield call(http.get, `${API_URL}/multiplications/random`);
+        console.log("randomFactorsRequest response: ", multiplication);
         yield put(asyncRandomFactors.success(multiplication));
     } catch (e) {
         const httpError = e as http.HttpError

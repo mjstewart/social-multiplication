@@ -1,6 +1,7 @@
 package microservices.book.gamificationservice.service
 
 import microservices.book.gamificationservice.domain.GameStat
+import microservices.book.gamificationservice.domain.ScoreCard
 
 interface GameService {
 
@@ -13,4 +14,6 @@ interface GameService {
      * Gets the game statistics for a given user.
      */
     fun retrieveStatsForUser(userId: Long): GameStat?
+
+    fun getScoreForAttempt(attemptId: Long): ScoreCard?
 }

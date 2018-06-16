@@ -18,8 +18,8 @@ export function* leaderboardRequest() {
         console.log('leaderboard response: ', leaderboard);
         yield put(asyncLeaderboard.success(leaderboard));
     } catch (e) {
-        console.log('leaderboardRequest error: ', e);
         const httpError = e as http.HttpError
+        console.log('leaderboardRequest error: ', httpError);
         yield put(asyncLeaderboard.failure(httpError.error.message));
     }
 }

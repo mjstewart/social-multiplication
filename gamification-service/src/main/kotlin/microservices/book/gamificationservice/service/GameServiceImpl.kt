@@ -107,4 +107,8 @@ class GameServiceImpl(
             logger.info("User with id {} won a new badge: {}", it.userId, it.badge)
         }
     }
+
+    override fun getScoreForAttempt(attemptId: Long): ScoreCard? {
+        return scoreCardRepository.findByAttemptId(attemptId)
+    }
 }

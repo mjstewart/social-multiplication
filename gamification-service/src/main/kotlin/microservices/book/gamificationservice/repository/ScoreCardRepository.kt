@@ -35,4 +35,6 @@ interface ScoreCardRepository : CrudRepository<ScoreCard, Long> {
      * score and timestamp.
      */
     fun findByUserIdOrderByScoreDescTimestampDesc(userId: Long): List<ScoreCard>
+
+    fun findByAttemptId(attemptId: Long): ScoreCard?
 }

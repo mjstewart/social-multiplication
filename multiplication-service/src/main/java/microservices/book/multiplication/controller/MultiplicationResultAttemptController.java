@@ -2,9 +2,6 @@ package microservices.book.multiplication.controller;
 
 import microservices.book.multiplication.domain.MultiplicationResultAttempt;
 import microservices.book.multiplication.service.MultiplicationService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,9 +29,12 @@ public final class MultiplicationResultAttemptController {
 
     @GetMapping("/{attemptId}")
     public ResponseEntity<MultiplicationResultAttempt> getResultAttempt(@PathVariable Long attemptId) {
-
-        return multiplicationService.getResultAttempt(attemptId)
+        System.out.println("getResultAttempt for " + attemptId);
+        ResponseEntity<MultiplicationResultAttempt> result = multiplicationService.getResultAttempt(attemptId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+
+        System.out.println("returning result=" + result);
+        return result;
     }
 }

@@ -1,3 +1,4 @@
+
 export enum HTTPStatusCode {
     OK = 200,
     CREATED = 201,
@@ -23,6 +24,7 @@ export const headers = new Headers({
 });
 
 function checkHttpError(response: Response): Promise<Response> {
+    console.log('checkHttpError: ', response);
     if (response.ok) {
         return Promise.resolve(response);
     }
@@ -41,6 +43,8 @@ function checkHttpError(response: Response): Promise<Response> {
 }
 
 function isResponseJson(response: Response): Promise<Response> {
+    console.log('isResponseJson: ', response);
+    
     const contentType = response.headers.get('content-type');
     if (contentType && contentType.includes('application/json')) {
         return Promise.resolve(response);
@@ -55,18 +59,28 @@ function toJson(response: Response): Promise<any> {
 export const validateResponseToJson = (response: Response): Promise<any> => {
     return checkHttpError(response)
         .then(isResponseJson)
-        .then(toJson);
+        .then(toJson)
 };
 
 export async function get(url: string): Promise<any> {
     try {
+        console.log('http get url=', url);
+        
         const response = await fetch(url, {
             headers,
             method: 'GET'
         });
+        console.log('get response is');
+        console.log(response.text);
+        
         return await validateResponseToJson(response);
     } catch (e) {
-        return Promise.reject(e);
+        console.log('get error: ',  e);
+        
+        if (e.error && e.response) {
+           return Promise.reject(e);
+        }
+        return Promise.reject(httpError(new Error('GET request failed'), new Response()));
     }
 }
 
@@ -79,6 +93,6 @@ export async function post(url: string, payload: any): Promise<any> {
         });
         return await validateResponseToJson(response);
     } catch (e) {
-        return Promise.reject(e);
+        return Promise.reject(httpError(new Error('POST request failed'), new Response()));
     }
 }

@@ -41,15 +41,17 @@ public class HystrixFallbackConfiguration implements FallbackProvider {
     @Override
     public String getRoute() {
         // this is the serviceId for the eureka service in application.yml
-        return "multiplication";
+        return "multiplication-service";
     }
 
     @Override
     public ClientHttpResponse fallbackResponse(String route, Throwable cause) {
+        System.out.println("fallbackResponse: route=" + route + " ,cause=" + cause.getClass().getName());
         if (cause instanceof HystrixTimeoutException) {
             return response(HttpStatus.GATEWAY_TIMEOUT);
         } else {
-            return response(HttpStatus.INTERNAL_SERVER_ERROR);
+            System.out.println("fallbackResponse returning else");
+            return response(HttpStatus.OK);
         }
     }
 
@@ -76,7 +78,7 @@ public class HystrixFallbackConfiguration implements FallbackProvider {
 
             @Override
             public InputStream getBody() throws IOException {
-                return new ByteArrayInputStream("fallback".getBytes());
+                return new ByteArrayInputStream("{\"factorA\":\"Sorry, Service is Down!\",\"factorB\":\"?\",\"id\":null}".getBytes());
             }
 
             @Override
@@ -85,7 +87,7 @@ public class HystrixFallbackConfiguration implements FallbackProvider {
                 headers.setContentType(MediaType.APPLICATION_JSON);
 
                 // since we're providing a fallback, spring doesn't automatically add cors to headers.
-                headers.setAccessControlAllowCredentials(true);
+//                headers.setAccessControlAllowCredentials(true);
                 headers.setAccessControlAllowOrigin("*");
                 return headers;
             }

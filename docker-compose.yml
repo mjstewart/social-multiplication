@@ -3,7 +3,7 @@ services:
   rabbit:
     image: "rabbitmq:3-management"
     ports:
-     - "5672:5762"
+     - "5672:5672"
      - "15672:15672"
   service-registry:
     image: "microservice/service-registry:0.0.1-SNAPSHOT"
@@ -11,7 +11,7 @@ services:
     ports: 
       - "8761:8761"
     environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://service-registry:8761/eureka"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://service-registry:8761/eureka/"
   gateway:
     image: "microservice/gateway:0.0.1-SNAPSHOT"
     # build: ./gateway
@@ -20,7 +20,7 @@ services:
     depends_on:
       - service-registry
     environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://service-registry:8761/eureka"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://service-registry:8761/eureka/"
   multiplication-service:
     image: "microservice/multiplication-service:0.0.1-SNAPSHOT"
     # build: ./multiplication-service
@@ -29,7 +29,7 @@ services:
       - gateway
       - service-registry
     environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://service-registry:8761/eureka"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://service-registry:8761/eureka/"
   gamification-service:
     image: "microservice/gamification-service:0.0.1-SNAPSHOT"
     # build: ./gamification-service
@@ -38,5 +38,5 @@ services:
       - gateway
       - service-registry
     environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://service-registry:8761/eureka"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://service-registry:8761/eureka/"
     

@@ -20,7 +20,12 @@ zuul:
       path: /stats/**
       serviceId: gamification-service
       stripPrefix: false
+    scores:
+      path: /scores/**
+      serviceId: gamification-service
+      stripPrefix: false
   include-debug-header: true
+  strip-prefix: true
   # only use the static routes about, this turns off zuul's crazy dynamic routing.
   ignored-services: "*"
 
@@ -29,7 +34,8 @@ management:
     web:
       exposure:
         include: "*"
+
 eureka:
   client:
     service-url:
-      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka}
